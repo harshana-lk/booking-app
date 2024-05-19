@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import "dotenv/config";
+import userRoutes from "./routes/users";
 
 // Connecting to MongoDB
 mongoose
@@ -18,6 +19,8 @@ app.use(cors()); // allow cross origin requests
 app.get("/api/test", async (req: Request, res: Response) => {
   res.json({ message: "hello from express endpoint!" });
 });
+
+app.use("/api/users", userRoutes);
 
 // Starting the server
 app.listen(3000, () => console.log("Server started on port 3000"));
