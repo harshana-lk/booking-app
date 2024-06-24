@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import "dotenv/config";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
+import cookieParser from "cookie-parser"
 
 // Connecting to MongoDB
 mongoose
@@ -12,9 +13,13 @@ mongoose
   .catch((err) => console.error(err));
 
 const app = express();
+app.use(cookieParser())
 app.use(express.json()); // convert the body to a json object
 app.use(express.urlencoded({ extended: true })); // convert the body to url encoded
-app.use(cors()); // allow cross origin requests
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+})); // allow cross origin requests
 
 // Adding an endpoint for testing
 app.get("/api/test", async (req: Request, res: Response) => {
